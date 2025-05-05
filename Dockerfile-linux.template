@@ -182,7 +182,7 @@ RUN set -eux; \
 	# <3.10 does not have -fno-semantic-interposition enabled and --with-lto does nothing for performance
 	if rcVersion == "3.9" then "" else (
 -}}
-		--with-lto \
+		$(test "$gnuArch" != 'riscv64-linux-musl' && echo '--with-lto') \
 {{ ) end -}}
 		--with-ensurepip \
 	; \
