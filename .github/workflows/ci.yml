@@ -57,7 +57,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Prepare Environment
-        run: ${{ matrix.runs.prepare }}
+        run: |
+          sudo apt -q update && sudo apt -q -y install jq
+          ${{ matrix.runs.prepare }}
       - name: Pull Dependencies
         run: ${{ matrix.runs.pull }}
       - name: Build ${{ matrix.name }}
