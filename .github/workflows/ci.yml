@@ -4,8 +4,6 @@ on:
   pull_request:
   push:
   workflow_dispatch:
-  schedule:
-    - cron: 0 0 * * 0
 
 defaults:
   run:
@@ -33,7 +31,7 @@ jobs:
           # https://github.com/docker-library/python/pull/706 (ensure we don't have any unexpected ".a" leftovers in "/usr/local")
           strategy="$(jq <<<"$strategy" -c '
             .matrix.include |= map(
-              if .os == "ubuntu-latest" then
+              if .os == "riscv-builders" then
                 .runs.test += "\n" + (
                   .meta.entries
                   | map(
@@ -55,7 +53,7 @@ jobs:
     needs: generate-jobs
     strategy: ${{ fromJson(needs.generate-jobs.outputs.strategy) }}
     name: ${{ matrix.name }}
-    runs-on: ${{ matrix.os }}
+    runs-on: riscv-builders
     steps:
       - uses: actions/checkout@v4
       - name: Prepare Environment
