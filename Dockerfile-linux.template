@@ -189,7 +189,7 @@ RUN set -eux; \
 	# skip LTO on riscv64: https://github.com/docker-library/python/pull/935, https://github.com/docker-library/python/pull/1038
 	if rcVersion == "3.9" then "" else (
 -}}
-		$(test "${gnuArch%%-}" != 'riscv64' && echo '--with-lto') \
+		$(if ! echo "${gnuArch%%-}" | grep -q 'riscv64'; then echo '--with-lto' ; fi) \
 {{ ) end -}}
 		--with-ensurepip \
 	; \

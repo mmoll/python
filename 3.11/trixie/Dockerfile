@@ -50,7 +50,7 @@ RUN set -eux; \
 		--enable-optimizations \
 		--enable-option-checking=fatal \
 		--enable-shared \
-		$(test "${gnuArch%%-}" != 'riscv64' && echo '--with-lto') \
+		$(if ! echo "${gnuArch%%-}" | grep -q 'riscv64'; then echo '--with-lto' ; fi) \
 		--with-ensurepip \
 	; \
 	nproc="$(nproc)"; \
